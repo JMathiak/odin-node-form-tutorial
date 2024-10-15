@@ -3,7 +3,10 @@ const { body, validationResult } = require("express-validator")
 
 const alphaErr = "must only contain letters"
 const lengthErr = "must be between 1 and 10 chartacters"
-
+const emailErr = "must be an email!"
+const ageNumErr = "must be a number"
+const ageRangeErr = 'must be a number between 18 and 120'
+const bioLengthErr = 'must be less than 200 characters'
 exports.usersListGet = (req, res) => {
     res.render("index", {
         title: "User list",
@@ -18,14 +21,14 @@ exports.usersCreateGet = (req, res) => {
 }
 
 exports.usersCreatePost = (req, res) => {
-    const {firstName, lastName} = req.body;
-    usersStorage.addUser({firstName, lastName})
+    const {firstName, lastName, email, age, bio} = req.body;
+    usersStorage.addUser({firstName, lastName, email, age, bio})
     res.redirect("/")
 }
 
 exports.usersUpdateGet = (req, res) =>{
     const user = usersStorage.getUser(req.params.id)
-    res.render("uppdateUser", {
+    res.render("updateUser", {
         title: "Update user",
         user: user
     })
@@ -42,7 +45,14 @@ const validateUser = [
     .isLength({ min: 1, max: 10 }).withMessage(`First name ${lengthErr}`),
     body("lastName").trim()
     .isAlpha().withMessage(`Last name ${alphaErr}`)
-    .isLength({ min: 1, max: 10 }).withMessage(`Last name ${lengthErr}`)
+    .isLength({ min: 1, max: 10 }).withMessage(`Last name ${lengthErr}`),
+    body("email").trim()
+    .isEmail().withMessage(`The email ${emailErr}`),
+    body("age").trim()
+    .isNumeric().withMessage(`${ageNumErr}`)
+    .isFloat({ min: 18, max: 120}).withMessage(`The age ${ageRangeErr}`),
+    body('body').trim()
+    .isLength({min: 0, max: 200}).withMessage(`${bioLengthErr}`)
 ];
 
 exports.usersCreatePost = [
@@ -56,8 +66,8 @@ exports.usersCreatePost = [
             })
         }
     
-    const { firstName, lastName } = req.body;
-    usersStorage.addUser({ firstName, lastName });
+    const { firstName, lastName, email, age , bio } = req.body;
+    usersStorage.addUser({ firstName, lastName, email, age, bio });
     res.redirect("/")
 }
 ]
@@ -74,8 +84,8 @@ exports.usersUpdatePost = [
                 errors: errors.array(),
             })
         }
-        const {firstName, lastName} = req.body;
-        usersStorage.updateUser(req.params.id, {firstName, lastName})
+        const { firstName, lastName, email, age, bio} = req.body;
+        usersStorage.updateUser(req.params.id, { firstName, lastName, email, age, bio })
         res.redirect('/')
     }
 ]
