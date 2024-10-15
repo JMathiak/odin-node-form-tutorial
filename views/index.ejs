@@ -11,9 +11,11 @@
         <%= title %>
     </h1>
     <form action="/search" method="get">
+        <label for="queryType">Search By: </label>
         <select name="queryType" id="queryType">
             <option value="searchEmail">Email</option>
             <option value="searchName">Name</option>
+            <option value="searchBoth">Both</option>
         </select>
         <input type="text" name="searchString" id="searchString" required>
         <button type="submit">Search</button>

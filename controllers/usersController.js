@@ -57,6 +57,13 @@ exports.usersSearch = (req, res) => {
             {
                 results.push(user)
             }
+        }else if(queryType == 'searchBoth')
+        {
+            let fullName = user.firstName + " " + user.lastName
+            if(fullName.includes(searchString) || user.email.include(searchString))
+            {
+                results.push(user)
+            }
         }
     })
     console.log(results)
