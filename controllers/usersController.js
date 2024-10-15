@@ -39,6 +39,35 @@ exports.usersDeletePost = (req, res) =>{
     res.redirect("/")
 }
 
+exports.usersSearch = (req, res) => {
+
+    const { queryType, searchString } = req.query;
+    let users = usersStorage.getUsers()
+    let results = []
+    users.forEach((user) => {
+        if(queryType == 'searchEmail')
+        {
+            if(user.email.includes(searchString)){
+                results.push(user)
+            }
+        }else if(queryType == 'searchName')
+        {
+            let fullName = user.firstName + " " + user.lastName
+            if(fullName.includes(searchString))
+            {
+                results.push(user)
+            }
+        }
+    })
+    console.log(results)
+    res.render("searchResults", {
+        title: "Search results",
+        results: results
+    })
+
+
+}
+
 const validateUser = [
     body("firstName").trim()
     .isAlpha().withMessage(`First name ${alphaErr}`)
@@ -89,4 +118,6 @@ exports.usersUpdatePost = [
         res.redirect('/')
     }
 ]
+
+
 
