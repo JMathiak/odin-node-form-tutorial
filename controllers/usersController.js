@@ -1,4 +1,5 @@
 const usersStorage = require('../storages/usersStorage')
+
 const { body, validationResult } = require("express-validator")
 
 const alphaErr = "must only contain letters"
@@ -13,6 +14,8 @@ exports.usersListGet = (req, res) => {
         users: usersStorage.getUsers()  
     })
 }
+
+
 
 exports.usersCreateGet = (req, res) => {
     res.render("createUser", {
@@ -125,6 +128,5 @@ exports.usersUpdatePost = [
         res.redirect('/')
     }
 ]
-
 
 

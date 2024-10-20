@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
 
 <head>
     <title>
@@ -22,6 +22,29 @@
             <input type="text" name="age" id="age" required>
             <label for="bio">Bio: </label>
             <input type="text" name="bio" id="bio">
+            <button type="submit">Submit</button>
+        </form>
+        <a href="/">Back to home</a>
+</body>
+
+</html> -->
+
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <h1>
+        <%= title %>
+    </h1>
+    <%- include("partials/errors.ejs") %>
+        <form action="/create" method="POST">
+            <label for="username">Username: </label>
+            <input type="text" name="username" id="username" required>
             <button type="submit">Submit</button>
         </form>
         <a href="/">Back to home</a>
