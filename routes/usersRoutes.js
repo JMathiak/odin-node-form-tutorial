@@ -9,5 +9,6 @@ usersRouter.post("/create", userDBController.createUserNamePost)
 usersRouter.get("/:id/update", usersController.usersUpdateGet);
 usersRouter.post("/:id/update", usersController.usersUpdatePost)
 usersRouter.post("/:id/delete", usersController.usersDeletePost)
-usersRouter.get("/search", usersController.usersSearch)
+usersRouter.get("/search", userDBController.getSearchResults)
+usersRouter.get("/delete", userDBController.deleteUsernames)
 module.exports = usersRouter;
